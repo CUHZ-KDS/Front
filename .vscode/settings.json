@@ -1,0 +1,25 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.useFlatConfig": true,
+
+  // --- ESLint 관련 설정 ---
+  // 저장 시 ESLint를 사용하여 자동으로 코드 수정
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit" // 저장 시 ESLint 자동 수정 활성화
+  },
+  // ESLint가 활성화될 파일 타입 지정
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "html",
+    "vue",
+    "json"
+  ],
+
+  "eslint.workingDirectories": [{ "mode": "auto" }]
+}

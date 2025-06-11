@@ -1,0 +1,8 @@
+// vscode 실행 시 아래 확장 프로그램이 설치가 안 되어 있다면 알림
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint", // ESLint 검사기
+    "esbenp.prettier-vscode", // Prettier 코드 포매터
+    "bradlc.vscode-tailwindcss" // Tailwind CSS
+  ]
+}
