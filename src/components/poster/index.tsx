@@ -10,7 +10,7 @@ interface PosterProps extends ComponentProps<'div'> {
 export default function Poster({ image, className, ...props }: PosterProps) {
   return (
     <Card
-      className={cn('bg-contain bg-center', className)}
+      className={cn('h-full w-full bg-cover bg-center bg-no-repeat', className)}
       style={{ backgroundImage: `url(${image})` }}
       {...props}
     ></Card>
