@@ -9,26 +9,25 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import CarouselPagination from './carousel-pagination';
-import Poster from '../poster';
 import { Card, CardContent } from '../ui/card';
 import { cn } from '@/lib/utils';
-import { ShowType } from '@/types/showType';
 
-interface ShowCarouselProps {
-  showList: ShowType[];
+interface ShowCarouselProps<T> {
+  showList: T[];
   isInteractive?: boolean;
-  onItemClick?: (item: ShowType) => void;
-  renderBottomContent?: (item: ShowType) => React.ReactNode;
+  onItemClick?: (item: T) => void;
+  renderItem: (item: T) => React.ReactNode;
+  renderBottomContent?: (item: T) => React.ReactNode;
 }
 
-export default function ShowCarousel({
+export default function ShowCarousel<T extends { id: React.Key }>({
   showList,
   isInteractive = true,
   onItemClick,
+  renderItem,
   renderBottomContent,
-}: ShowCarouselProps) {
+}: ShowCarouselProps<T>) {
   const { selectedIndex, setApi, setIndex } = useShowCarousel();
-
   const totalSlides = showList.length > 4 ? showList.length - 3 : 1;
 
   return (
@@ -57,9 +56,7 @@ export default function ShowCarousel({
                   )}
                   onClick={isInteractive && onItemClick ? () => onItemClick(show) : undefined}
                 >
-                  <CardContent className="w-full p-0">
-                    <Poster className="h-[400px]" image={show.img_source} />
-                  </CardContent>
+                  <CardContent className="w-full p-0">{renderItem(show)}</CardContent>
                 </Card>
                 {renderBottomContent && renderBottomContent(show)}
               </div>
