@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Login from '../login';
+import User from '../user';
 
 const Header = () => {
   return (
@@ -8,7 +8,8 @@ const Header = () => {
         <Link className="font-sans text-3xl font-bold text-red-600" href={'/'}>
           MOTI
         </Link>
-        <Login />
+        {/* 아래 컴포넌트에서 로그인 또는 아바타로 분기 */}
+        <User />
       </div>
     </div>
   );
