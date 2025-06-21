@@ -4,11 +4,13 @@ import Poster from '@/components/poster';
 import Gradient from '@/components/gradient';
 import InfoRow from './info-row';
 import ShowCalendar from '../calendar';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useShowDetail } from '../../hooks/useDetailShow';
+import { Button } from '@/components/ui/button';
 
 export default function ShowDetail() {
   const { id } = useParams<{ id: string }>();
+  const router = useRouter();
   const { data: show } = useShowDetail(true, Number(id));
   const {
     place_name,
@@ -19,6 +21,11 @@ export default function ShowDetail() {
     min_age,
     grade,
   } = show.data;
+
+  function bookingHandler(id: string) {
+    router.push(`/book/${id}`);
+  }
+
   return (
     <div className="w-full">
       <h1 className="mr-auto text-4xl font-bold select-none">{show.data.title}</h1>
@@ -64,6 +71,13 @@ export default function ShowDetail() {
         <div className="relative ml-auto max-w-96 min-w-96">
           {/* ticket_date_time에 따라 카운트or캘린더 분기 */}
           <ShowCalendar />
+          <Button
+            onClick={() => bookingHandler(id)}
+            className="absolute right-6 bottom-0 h-[49px] w-[162px] cursor-pointer text-xl font-semibold"
+            variant="ff"
+          >
+            좌석 선택하기
+          </Button>
         </div>
       </div>
     </div>
