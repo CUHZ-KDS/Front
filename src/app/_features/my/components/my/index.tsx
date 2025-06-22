@@ -3,10 +3,13 @@ import ShowCarousel from '@/components/showCarousel';
 import { useMyShowList } from '../../hooks/useMy';
 import { Button } from '@/components/ui/button';
 import Poster from '@/components/poster';
+import Loading from '@/components/loading.tsx';
+import { useProtect } from '@/hooks/useProtect';
 
 export default function My() {
   const { data: myShowList } = useMyShowList();
-
+  const { isLoading } = useProtect();
+  if (isLoading) return <Loading />;
   return (
     <div className="w-full">
       <ShowCarousel
