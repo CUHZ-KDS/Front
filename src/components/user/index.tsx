@@ -1,15 +1,34 @@
 'use client';
-import { usePathname } from 'next/navigation';
 import UserAvatar from './avatar';
 import Login from '../login';
+import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
 
-{
-  /* 임시 컴포넌트 리팩토링 필요
-  로그인 유무에 따라 로그인 또는 아바타가 나타나야함 */
+export interface GuestDataType {
+  accessToken: string;
+  refreshToken: string;
+  member: {
+    nickname: string;
+    memberType: string;
+  };
 }
 export default function User() {
-  const pathanme = usePathname();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const user = useAuthStore(state => state.user);
+  const initializeAuth = useAuthStore(state => state.initializeAuth);
+  const logout = useAuthStore(state => state.logout);
 
-  if (pathanme.includes('my')) return <UserAvatar />;
-  return <Login />;
+  useEffect(() => {
+    try {
+      initializeAuth();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [initializeAuth]);
+
+  if (isLoading) return null;
+  if (!user) return <Login />;
+  return <UserAvatar guestData={user} logout={logout} />;
 }
