@@ -11,7 +11,7 @@ interface CountdownTimerProps {
   onComplete?: () => void;
 }
 
-export const CountdownTimer: React.FC<CountdownTimerProps> = memo(
+const CountdownTimer: React.FC<CountdownTimerProps> = memo(
   ({
     initialSeconds,
     size = 40, // 기본 크기 40px
@@ -94,4 +94,5 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = memo(
   }
 );
 
+export default CountdownTimer;
 CountdownTimer.displayName = 'CountdownTimer';

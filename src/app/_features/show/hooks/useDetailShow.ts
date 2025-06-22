@@ -1,3 +1,4 @@
+'use client';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ShowDetailApiType } from '@/types/showDetailType';
 import { dummyData } from '../dummyDetail';

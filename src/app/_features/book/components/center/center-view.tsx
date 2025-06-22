@@ -1,4 +1,4 @@
-import { CountdownTimer } from '@/components/countdownTimer';
+import CountdownTimer from '@/components/countdownTimer';
 import SelectZone from './selectZone';
 
 export default function Centerview() {
