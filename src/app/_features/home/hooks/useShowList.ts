@@ -1,15 +1,19 @@
+'use client';
 import { ShowApiType } from '@/types/showType';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { dummyData } from '../dummy';
+import { API_URL } from '@/lib/api';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const base_url = API_URL.base;
+const endpoint = API_URL.shows;
 
 async function getShowList(): Promise<ShowApiType> {
   try {
-    const response = await fetch(`${BASE_URL}/api/v1/shows`);
+    const response = await fetch(`${base_url}/${endpoint}`);
 
     if (!response.ok) {
-      // 추후 에러핸들링 필요
+      const errorText = await response.text();
+      console.error(errorText);
       throw new Error('');
     }
     const data: ShowApiType = await response.json();

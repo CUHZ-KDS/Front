@@ -8,7 +8,7 @@ export default function MyPage() {
   return (
     <ContainerWrapper>
       <h1 className="mr-auto text-4xl font-bold select-none">마이 페이지</h1>
-      <ErrorBoundary fallback={<div>...에러</div>}>
+      <ErrorBoundary fallback={<div>조회에 실패했습니다.</div>}>
         <Suspense fallback={<Loading />}>
           <My />
         </Suspense>

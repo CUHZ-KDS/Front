@@ -9,7 +9,7 @@ export default function BookPage() {
   return (
     <ContainerWrapper>
       {/* 에러 및 로딩 컴포넌트 변경 예정 */}
-      <ErrorBoundary fallback={<div>...에러</div>}>
+      <ErrorBoundary fallback={<div>공연을 찾을 수 없습니다.</div>}>
         <Suspense fallback={<Loading />}>
           <BookDetail />
         </Suspense>

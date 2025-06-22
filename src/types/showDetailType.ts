@@ -23,6 +23,7 @@ export type ShowDetailType = {
   running_time_minute: number;
   intermission_time: number;
   grade: Grade[];
+  img_source: string;
 };
 
 export type ShowDetailApiType = {
