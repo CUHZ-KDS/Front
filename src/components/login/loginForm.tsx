@@ -1,3 +1,4 @@
+'use client';
 import {
   DialogContent,
   DialogDescription,
@@ -5,9 +6,16 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
 
-const LoginForm = () => {
+import Loading from '../loading.tsx';
+
+interface LoginFormProps {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  isPending: boolean;
+  mutationError: Error | null;
+}
+// 현재는 게스트 로그인만 구현
+const LoginForm = ({ isPending, mutationError, onSubmit }: LoginFormProps) => {
   return (
     <DialogContent className="h-[588px] w-[640px] bg-white">
       <div className="mx-auto flex w-[374px] flex-col justify-center">
@@ -18,15 +26,20 @@ const LoginForm = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <form className="flex flex-col gap-2">
-          <Input className="border-gray-300" placeholder="ID" />
-          <Input className="border-gray-300" placeholder="PW" />
-          <Button className="h-12 w-full cursor-pointer bg-[#4000FF] font-semibold text-white hover:bg-[#4000FF]/90">
-            로그인
+        <form className="flex flex-col gap-2 text-black" onSubmit={onSubmit}>
+          <Button
+            disabled={isPending}
+            className="h-12 w-full cursor-pointer bg-[#4000FF] font-semibold text-white hover:bg-[#4000FF]/90"
+          >
+            {isPending ? <Loading /> : '게스트 로그인'}
           </Button>
-          <Button className="h-12 w-full cursor-pointer bg-[#889BE5] font-semibold text-white hover:bg-[#889BE5]/90">
-            회원가입
-          </Button>
+
+          {mutationError && (
+            <div className="flex flex-col gap-1 text-sm text-red-600">
+              <p>알 수 없는 오류가 발생했습니다.</p>
+              <p>잠시 후 다시 시도해주세요.</p>
+            </div>
+          )}
         </form>
       </div>
     </DialogContent>

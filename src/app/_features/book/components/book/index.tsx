@@ -3,8 +3,13 @@
 import LeftZoneView from '../left/left-zone-view';
 import CenterView from '../center/center-view';
 import RightView from '../right/right-view';
+import Loading from '@/components/loading.tsx';
+import { useProtect } from '@/hooks/useProtect';
 
 export default function BookDetail() {
+  const { isLoading } = useProtect();
+  if (isLoading) return <Loading />;
+
   return (
     <div className="flex w-full flex-col">
       <h1 className="mr-auto text-4xl font-bold select-none">예약 공연 제목</h1>

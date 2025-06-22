@@ -2,6 +2,7 @@ import ContainerWrapper from '@/components/layout/container-wrapper';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Show } from '../_features/home';
+import Loading from '@/components/loading.tsx';
 
 export default function Page() {
   return (
@@ -10,7 +11,7 @@ export default function Page() {
 
       {/* 에러 및 로딩 컴포넌트 변경 예정 */}
       <ErrorBoundary fallback={<div>...에러</div>}>
-        <Suspense fallback={<div>...로딩</div>}>
+        <Suspense fallback={<Loading />}>
           <Show />
         </Suspense>
       </ErrorBoundary>
