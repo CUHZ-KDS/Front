@@ -4,23 +4,32 @@ import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent } from '@/components/ui/card';
 import { ko } from 'date-fns/locale';
 import { format } from 'date-fns';
-{
-  /* 캘린더는 추후 Detail 정보와 연동되어야 함 */
+
+interface ShowCalendarProps {
+  /** 공연 시작일 (형식: 'YYYY-MM-DD') */
+  start_date: string;
+  /** 공연 종료일 (형식: 'YYYY-MM-DD') */
+  end_date: string;
 }
-{
-  /* 날짜는 API에서 받아온 데이터에서 선택 가능 */
-}
-export default function ShowCalendar() {
+
+export default function ShowCalendar({ start_date, end_date }: ShowCalendarProps) {
+  const startDate = new Date(start_date);
+  const endDate = new Date(end_date);
+
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(23, 59, 59, 999);
   return (
     <Card className="border-none bg-inherit p-0">
       <CardContent>
         <Calendar
-          hideNavigation={true}
+          disabled={date => {
+            return date < startDate || date > endDate;
+          }}
+          // hideNavigation={true}
           showOutsideDays={false}
           className="w-full"
           classNames={{
-            caption_label: 'text-[28px] m-auto font-semibold',
-            month_caption: 'flex',
+            caption_label: 'text-[20px] m-auto font-semibold',
           }}
           mode="single"
           locale={ko}
