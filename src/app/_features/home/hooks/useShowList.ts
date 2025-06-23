@@ -1,22 +1,15 @@
 'use client';
 import { ShowApiType } from '@/types/showType';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { dummyData } from '../dummy';
-import { API_URL } from '@/lib/api';
+import { API_URL, axiosInstance } from '@/lib/api';
 
-const base_url = API_URL.base;
 const endpoint = API_URL.shows;
 
 async function getShowList(): Promise<ShowApiType> {
   try {
-    const response = await fetch(`${base_url}/${endpoint}`);
+    const response = await axiosInstance.get<ShowApiType>(`/${endpoint}`);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(errorText);
-      throw new Error('');
-    }
-    const data: ShowApiType = await response.json();
+    const data: ShowApiType = response.data;
     return data;
   } catch (e) {
     // 상세한 에러 핸들링 필요
@@ -25,25 +18,11 @@ async function getShowList(): Promise<ShowApiType> {
 }
 
 /**
- * 더미 데이터
- * 추후 삭제 예정
- */
-async function getDummyShowList(): Promise<ShowApiType> {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(dummyData);
-    }, 2000);
-  });
-}
-
-/**
- *
- * @param isMock
  * @returns 전체 공연 리스트를 반환합니다.
  */
-export function useShowList(isMock: boolean = true) {
+export function useShowList() {
   return useSuspenseQuery({
     queryKey: ['showList'],
-    queryFn: isMock ? getDummyShowList : getShowList,
+    queryFn: getShowList,
   });
 }
