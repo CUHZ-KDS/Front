@@ -18,7 +18,7 @@ export default function ShowDetail() {
   const [done, setDone] = useState(false);
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { data: show } = useShowDetail(false, Number(id));
+  const { data: show } = useShowDetail(Number(id));
 
   useEffect(() => {
     setIsClient(true);
