@@ -24,3 +24,18 @@ export type ShowDetailApiType = {
   message: string;
   data: ShowDetailType;
 };
+
+export type ShowSchedulesType = {
+  schedules: { id: string; showDate: string }[];
+};
+
+export type ShowSchedulesApiType = {
+  code: string;
+  message: string;
+  data: ShowSchedulesType;
+};
+
+export type ShowDetailAndSchedulesApiType = {
+  detail: ShowDetailApiType;
+  schedules: ShowSchedulesApiType;
+};

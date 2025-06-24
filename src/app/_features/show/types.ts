@@ -14,4 +14,8 @@ export interface ShowCalendarAndTimerProps {
   startDate: string;
   endDate: string;
   id: string;
+  schedules: {
+    id: string;
+    showDate: string;
+  }[];
 }

@@ -16,7 +16,7 @@ export default function ShowDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: show } = useShowDetail(Number(id));
 
-  const { title, ticketDateTime, startDate, endDate, imgSource } = show;
+  const { title, ticketDateTime, startDate, endDate, imgSource, schedules } = show;
 
   return (
     <ThreeContainer title={title}>
@@ -33,6 +33,7 @@ export default function ShowDetail() {
           id={id}
           startDate={startDate}
           endDate={endDate}
+          schedules={schedules}
         />
       </RightContainer>
     </ThreeContainer>

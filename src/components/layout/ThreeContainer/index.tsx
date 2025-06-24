@@ -43,6 +43,8 @@ export function RightContainer({
   className?: string;
 }) {
   return (
-    <div className={cn('relative flex w-[350px] flex-col border-l-2', className)}>{children}</div>
+    <div className={cn('relative flex w-[350px] shrink-0 flex-col border-l-2', className)}>
+      {children}
+    </div>
   );
 }
