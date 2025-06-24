@@ -1,16 +1,21 @@
-import { ShowDetail } from '@/app/_features/show';
+'use client';
 import ContainerWrapper from '@/components/layout/container-wrapper';
 import Loading from '@/components/loading.tsx';
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+
+const NoSSRShowDetail = dynamic(() => import('@/app/_features/show/components/detail/index'), {
+  ssr: false,
+  loading: () => <Loading />,
+});
 
 export default function Page() {
   return (
     <ContainerWrapper>
-      {/* 에러 및 로딩 컴포넌트 변경 예정 */}
-      <ErrorBoundary fallback={<div>공연을 찾을 수 없습니다.</div>}>
+      <ErrorBoundary fallback={<div>해당 공연을 찾을 수 없습니다</div>}>
         <Suspense fallback={<Loading />}>
-          <ShowDetail />
+          <NoSSRShowDetail />
         </Suspense>
       </ErrorBoundary>
     </ContainerWrapper>

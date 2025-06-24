@@ -1,4 +1,5 @@
 'use client';
+
 import ShowCarousel from '@/components/showCarousel';
 import ShowDetailDialog from '../dialog';
 import { useShowList } from '../../hooks/useShowList';
@@ -12,9 +13,9 @@ export default function Show() {
   return (
     <div className="w-full">
       <ShowCarousel
-        showList={showList.data}
+        showList={showList?.data}
         onItemClick={handleItemClick}
-        renderItem={item => <Poster className="h-[400px]" image={item.img_source} />}
+        renderItem={item => <Poster className="h-[400px]" image={item.imgSource} />}
       />
       {selectedItem && <ShowDetailDialog onClose={handleDialogClose} selectedItem={selectedItem} />}
     </div>

@@ -1,11 +1,4 @@
-// enum GradeName {
-//   vip = 'VIP석',
-//   r = 'R석',
-//   s = 'S석',
-//   a = 'A석',
-// }
-
-type Grade = {
+export type Grade = {
   name: string;
   price: number;
 };
@@ -13,21 +6,36 @@ type Grade = {
 export type ShowDetailType = {
   id: number;
   title: string;
-  place_name: string;
+  placeName: string;
   category: string;
   status: string;
-  start_date: string;
-  end_date: string;
-  ticket_date_time: string;
-  min_age: number;
-  running_time_minute: number;
-  intermission_time: number;
+  startDate: string;
+  endDate: string;
+  ticketDateTime: string;
+  minAge: number;
+  runningTimeMinute: number;
+  intermissionTime: number;
   grade: Grade[];
-  img_source: string;
+  imgSource: string;
 };
 
 export type ShowDetailApiType = {
   code: string;
   message: string;
   data: ShowDetailType;
+};
+
+export type ShowSchedulesType = {
+  schedules: { id: string; showDate: string }[];
+};
+
+export type ShowSchedulesApiType = {
+  code: string;
+  message: string;
+  data: ShowSchedulesType;
+};
+
+export type ShowDetailAndSchedulesApiType = {
+  detail: ShowDetailApiType;
+  schedules: ShowSchedulesApiType;
 };

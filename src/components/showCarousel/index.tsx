@@ -28,7 +28,7 @@ export default function ShowCarousel<T extends { id: React.Key }>({
   renderBottomContent,
 }: ShowCarouselProps<T>) {
   const { selectedIndex, setApi, setIndex } = useShowCarousel();
-  const totalSlides = showList.length > 4 ? showList.length - 3 : 1;
+  const totalSlides = showList?.length > 4 ? showList?.length - 3 : 1;
 
   return (
     <div>
@@ -46,7 +46,7 @@ export default function ShowCarousel<T extends { id: React.Key }>({
         className="w-full"
       >
         <CarouselContent className="-ml-1">
-          {showList.map(show => (
+          {showList?.map(show => (
             <CarouselItem key={show.id} className="pl-1 lg:basis-1/4">
               <div className="relative h-[450px] p-1">
                 <Card
