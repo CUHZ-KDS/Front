@@ -1,3 +1,4 @@
+import { API_URL, axiosInstance } from '@/lib/api';
 import { AuthType } from '@/types/auth';
 import { create } from 'zustand';
 
@@ -24,6 +25,12 @@ export const useAuthStore = create<State & Actions>((set, get) => ({
     set({ user: null });
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('guest-1');
+      try {
+        // 로그아웃 요청
+        await axiosInstance.post(`${API_URL.logout}`);
+      } catch (e) {
+        console.error('logout-e', e);
+      }
     }
   },
 

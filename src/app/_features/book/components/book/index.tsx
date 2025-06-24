@@ -1,34 +1,75 @@
 'use client';
 
-import LeftZoneView from '../left/left-zone-view';
-import CenterView from '../center/center-view';
-import RightView from '../right/right-view';
-import Loading from '@/components/loading.tsx';
-import { useProtect } from '@/hooks/useProtect';
+import { useSeats } from '../../hooks/useSeats';
+import { useParams } from 'next/navigation';
+import ThreeContainer, {
+  CenterContainer,
+  LeftContainer,
+  RightContainer,
+} from '@/components/layout/ThreeContainer';
+import ZonePreview from '../left/zone-preview';
+import CountdownTimer from '@/components/countdownTimer';
+import SelectZone from '../center/selectZone';
+import SelectSeat from '../right/select-seat';
+import PaymentPreview from '../right/payment-preview';
+import { useBookStore } from '../../store/bookStore';
+import { useEffect } from 'react';
 
 export default function BookDetail() {
-  const { isLoading } = useProtect();
-  if (isLoading) return <Loading />;
+  const params = useParams<{ id: string }>();
+  const { id: scheduleId } = params;
+  const { data: seatsData } = useSeats(scheduleId);
+  const selectSeats = useBookStore(state => state.selectSeats);
+  const reset = useBookStore(state => state.reset);
+  const availableSeats = useBookStore(state => state.availableSeats);
+
+  const handlePayment = () => {
+    console.log(selectSeats);
+    // seatid -> path
+    // scheduleId -> body
+  };
+
+  const onComplte = () => {
+    // 카운트가 다 됐을때 실행
+  };
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, []);
 
   return (
-    <div className="flex w-full flex-col">
-      <h1 className="mr-auto text-4xl font-bold select-none">예약 공연 제목</h1>
-      <div className="flex h-[600px] gap-2 py-4">
-        {/* (좌측) 전체 좌석 예약 현황 */}
-        <div className="flex h-90 flex-shrink-0 flex-col rounded-md border-2 border-gray-600 p-4">
-          <LeftZoneView />
-        </div>
+    <ThreeContainer title={seatsData?.showTitle}>
+      <LeftContainer className="flex h-90 flex-shrink-0 flex-col rounded-md border-2 border-gray-600 p-4">
+        <>
+          <h3 className="pb-2 text-xl">전체 좌석 예약 현황</h3>
+          <ZonePreview seatsData={seatsData} />
+        </>
+      </LeftContainer>
+      <CenterContainer className="px-2">
+        <>
+          <CountdownTimer initialSeconds={600} onComplete={onComplte} />
+          <SelectZone />
+        </>
+      </CenterContainer>
+      <RightContainer className="px-2">
+        <>
+          <div className="flex-1 overflow-y-auto py-4">
+            <div className="flex flex-row items-center justify-between py-2">
+              <h3 className="text-xl">선택 좌석</h3>
+              <p className="py-1 text-sm text-gray-400">선택 가능 좌석수 {availableSeats}</p>
+            </div>
+            <SelectSeat />
+          </div>
 
-        {/* (중앙) 선택 좌석 현황 */}
-        <div className="flex w-[550px] flex-shrink-0 flex-col gap-2 p-4">
-          <CenterView />
-        </div>
-
-        {/* (우측) 좌석 및 결제 금액 안내 */}
-        <div className="flex w-[340px] flex-shrink-0 flex-col border-l-2 p-4">
-          <RightView />
-        </div>
-      </div>
-    </div>
+          <div className="border-b-2 border-white py-4" />
+          <div className="mt-10 flex h-full max-h-40 flex-col font-bold">
+            <h3 className="pb-4 text-xl">결제 예정 금액</h3>
+            <PaymentPreview handlePayment={handlePayment} />
+          </div>
+        </>
+      </RightContainer>
+    </ThreeContainer>
   );
 }

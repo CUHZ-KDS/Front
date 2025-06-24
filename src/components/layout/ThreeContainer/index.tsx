@@ -10,7 +10,7 @@ export default function ThreeContainer({
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <h1 className="mr-auto text-4xl font-bold select-none">{title}</h1>
-      <div className="flex h-[600px] w-full gap-6 py-4">{children}</div>
+      <div className="flex h-[600px] w-full justify-center gap-4 py-4">{children}</div>
     </div>
   );
 }
@@ -22,7 +22,7 @@ export function LeftContainer({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn('relative w-[400px] shrink-0', className)}>{children}</div>;
+  return <div className={cn('relative w-[380px] shrink-0', className)}>{children}</div>;
 }
 
 export function CenterContainer({
@@ -32,7 +32,7 @@ export function CenterContainer({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn('w-[470px] shrink-0', className)}>{children}</div>;
+  return <div className={cn('w-[500px] shrink-0', className)}>{children}</div>;
 }
 
 export function RightContainer({
@@ -43,7 +43,7 @@ export function RightContainer({
   className?: string;
 }) {
   return (
-    <div className={cn('relative flex w-[350px] shrink-0 flex-col border-l-2', className)}>
+    <div className={cn('relative flex w-[340px] shrink-0 flex-col border-l-2', className)}>
       {children}
     </div>
   );
