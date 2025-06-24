@@ -4,7 +4,9 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 export const API_URL = {
   base: process.env.NEXT_PUBLIC_API_BASE_URL,
   guest: 'api/v1/auth/guest-login',
+  logout: 'api/v1/auth/logout',
   shows: 'api/v1/shows',
+  me: 'api/v1/members/me',
   my_reservations: 'api/v1/members/me/reservations',
   refresh: 'api/v1/refresh',
 };
@@ -19,8 +21,13 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   config => {
-    const secureEndpoints = [`/${API_URL.my_reservations}`];
-    const requiresAuth = secureEndpoints.some(endpoint => config.url?.startsWith(endpoint));
+    const authRequiredPatterns = [
+      /^\/api\/v1\/my-reservations/,
+      /^\/api\/v1\/me/,
+      /^\/api\/v1\/logout/,
+      /^\/api\/v1\/show-schedules\/[^/]+\/seats/,
+    ];
+    const requiresAuth = authRequiredPatterns.some(regex => regex.test(config.url || ''));
 
     if (requiresAuth) {
       // 서버 환경에서는 토큰이 필요한 요청을 차단

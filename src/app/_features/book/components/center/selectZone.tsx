@@ -1,8 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
 import { useBookStore } from '../../store/bookStore';
-import { groupAndSortSeats } from '../utils/seatUtils';
-import { SeatsType } from '../../dummy';
+import { SeatsType } from '../../types';
 
 export default function SelectZone() {
   const selectZone = useBookStore(state => state.selectZone);
@@ -17,11 +16,8 @@ export default function SelectZone() {
     );
   }
 
-  const groupSeats = groupAndSortSeats(selectZone.seats);
-
   const handleClick = (seat: SeatsType) => {
     if (seat.status !== 'available') return;
-    // 소켓으로 교체?
 
     const slectSeatData = {
       zoneName: selectZone?.zoneName,
@@ -34,9 +30,9 @@ export default function SelectZone() {
 
   return (
     <>
-      <h3 className="text-center text-lg">{selectZone?.zoneName} 구역</h3>
+      <h3 className="text-center text-lg">{selectZone?.zoneName}</h3>
       <div className="flex flex-col gap-1">
-        {groupSeats.map((seats, i) => (
+        {selectZone.seats.map((seats, i) => (
           <div key={i} className={cn('flex flex-row gap-1')}>
             {seats.map(seat => (
               <button
@@ -44,8 +40,10 @@ export default function SelectZone() {
                 key={seat.id}
                 className={cn(
                   'aspect-square h-auto w-5 p-0',
-                  seat.status === 'available' && 'cursor-pointer bg-white hover:bg-gray-400',
-                  seat.status === 'book' && 'bg-[#979797]',
+                  seat.isVisible &&
+                    seat.status === 'available' &&
+                    'cursor-pointer bg-white hover:bg-gray-400',
+                  seat.isVisible && seat.status === 'booked' && 'bg-[#979797]',
                   selectedSeatIds.includes(seat.id) && 'bg-red-600'
                 )}
               ></button>
