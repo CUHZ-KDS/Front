@@ -46,10 +46,12 @@ const CountdownTimer: React.FC<CountdownTimerProps> = memo(
     // strokeDashoffset: 시간이 흐를수록 0에 가까워져 원이 채워짐
     const strokeDashoffset = circumference * (1 - progress);
 
-    // 남은 시간을 MM:SS 형식으로 변환
-    const minutes = Math.floor(secondsLeft / 60);
-    const seconds = secondsLeft % 60;
-    const timeFormatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    // 남은 시간을 HH:MM:SS 형식으로 변환
+    const hours = Math.floor(secondsLeft / 3600); // 시간 계산
+    const minutes = Math.floor((secondsLeft % 3600) / 60); // 분 계산
+    const seconds = secondsLeft % 60; // 초 계산
+
+    const timeFormatted = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
     return (
       <div className="flex items-center justify-end gap-4 rounded-lg p-2 text-white">
