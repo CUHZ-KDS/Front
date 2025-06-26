@@ -1,3 +1,14 @@
+export enum SeatGrade {
+  S = 'S석',
+  R = 'R석',
+  VIP = 'VIP석',
+}
+
+export enum SeatStatus {
+  AVAILABLE = 'available',
+  BOOKED = 'booked',
+}
+
 export interface AllSeatsApiType {
   code: string;
   message: string;
@@ -18,9 +29,9 @@ export interface SeatsType {
   id: string;
   row: number;
   col: number;
-  name: string;
+  name: SeatGrade;
   isVisible: boolean;
-  status: string;
+  status: SeatStatus;
   price: number;
 }
 
@@ -33,4 +44,15 @@ export interface GroupSortType {
   zoneName: string;
   zoneId: string;
   seats: SeatsType[][];
+}
+
+export interface ReservationsApiType {
+  code: string;
+  message: string;
+  data: ReservationType;
+}
+export interface ReservationType {
+  orderToken: string;
+  totalAmount: number;
+  reservedSeatIds: number[];
 }
