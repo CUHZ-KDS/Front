@@ -3,10 +3,12 @@ import { memo } from 'react';
 import { AllSeatsDataType } from '../../types';
 import { cn } from '@/lib/utils';
 import { groupAndSortSeats } from '../utils/seatUtils';
+import ZoneItem from './zone-item';
 
 export default memo(function ZonePreview({ seatsData }: { seatsData: AllSeatsDataType }) {
   const setSelectZone = useBookStore(state => state.setSelectZone);
   const selectedZone = useBookStore(state => state.selectZone);
+  const selectSeats = useBookStore(state => state.selectSeats);
 
   const groupZone = groupAndSortSeats(seatsData);
 
@@ -23,18 +25,7 @@ export default memo(function ZonePreview({ seatsData }: { seatsData: AllSeatsDat
         >
           <h3 className="text-center text-sm">{zone.zoneName}</h3>
           {zone.seats.map((seats, i) => (
-            <div key={i} className="flex flex-row gap-1">
-              {seats.map(seat => (
-                <div
-                  key={seat.id}
-                  className={cn(
-                    'aspect-square h-1 w-1 p-0',
-                    seat.isVisible && seat.status === 'available' && 'bg-white',
-                    seat.isVisible && seat.status === 'booked' && 'bg-[#979797]'
-                  )}
-                ></div>
-              ))}
-            </div>
+            <ZoneItem key={zone.zoneId + i} seats={seats} selectedSeatIds={selectSeats} />
           ))}
         </div>
       ))}
