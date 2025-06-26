@@ -9,6 +9,7 @@ export const API_URL = {
   me: 'api/v1/members/me',
   my_reservations: 'api/v1/members/me/reservations',
   refresh: 'api/v1/refresh',
+  book: 'api/v1/reservations',
 };
 
 export const axiosInstance = axios.create({
@@ -24,6 +25,7 @@ axiosInstance.interceptors.request.use(
     const authRequiredPatterns = [
       /^\/api\/v1\/my-reservations/,
       /^\/api\/v1\/me/,
+      /^\/api\/v1\/reservations/,
       /^\/api\/v1\/logout/,
       /^\/api\/v1\/show-schedules\/[^/]+\/seats/,
     ];
