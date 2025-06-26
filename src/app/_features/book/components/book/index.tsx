@@ -8,29 +8,36 @@ import ThreeContainer, {
   RightContainer,
 } from '@/components/layout/ThreeContainer';
 import ZonePreview from '../left/zone-preview';
-import CountdownTimer from '@/components/countdownTimer';
 import SelectZone from '../center/selectZone';
 import SelectSeat from '../right/select-seat';
-import PaymentPreview from '../right/payment-preview';
+import BookedPreview from '../right/booked-preview';
 import { useBookStore } from '../../store/bookStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useBookMutation } from '../../hooks/useBookMutation';
+import PaymentView from '../right/payment-view';
+import { RotateCcw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function BookDetail() {
   const params = useParams<{ id: string }>();
   const { id: scheduleId } = params;
   const { data: seatsData } = useSeats(scheduleId);
-  const selectSeats = useBookStore(state => state.selectSeats);
+  const [isPaymentView, setIsPaymentView] = useState(false);
   const reset = useBookStore(state => state.reset);
   const availableSeats = useBookStore(state => state.availableSeats);
 
-  const handlePayment = () => {
-    console.log(selectSeats);
-    // seatid -> path
-    // scheduleId -> body
+  const handleOnSuccess = () => {
+    setIsPaymentView(true);
   };
+  const {
+    mutate: bookMutate,
+    data,
+    reset: mutationReset,
+  } = useBookMutation(scheduleId, handleOnSuccess);
 
-  const onComplte = () => {
-    // 카운트가 다 됐을때 실행
+  const closePayment = () => {
+    setIsPaymentView(false);
+    mutationReset();
   };
 
   useEffect(() => {
@@ -47,18 +54,24 @@ export default function BookDetail() {
           <ZonePreview seatsData={seatsData} />
         </>
       </LeftContainer>
-      <CenterContainer className="px-2">
+      <CenterContainer className="">
         <>
-          <CountdownTimer initialSeconds={600} onComplete={onComplte} />
           <SelectZone />
         </>
       </CenterContainer>
       <RightContainer className="px-2">
         <>
           <div className="flex-1 overflow-y-auto py-4">
-            <div className="flex flex-row items-center justify-between py-2">
+            <div className="flex flex-row items-center py-2">
               <h3 className="text-xl">선택 좌석</h3>
-              <p className="py-1 text-sm text-gray-400">선택 가능 좌석수 {availableSeats}</p>
+              <p className="px-2 py-1 text-sm text-gray-400">선택 가능 좌석수 {availableSeats}</p>
+              <Button
+                variant="outline"
+                className="ml-auto h-7 w-6 cursor-pointer px-0"
+                onClick={reset}
+              >
+                <RotateCcw size={16} />
+              </Button>
             </div>
             <SelectSeat />
           </div>
@@ -66,7 +79,18 @@ export default function BookDetail() {
           <div className="border-b-2 border-white py-4" />
           <div className="mt-10 flex h-full max-h-40 flex-col font-bold">
             <h3 className="pb-4 text-xl">결제 예정 금액</h3>
-            <PaymentPreview handlePayment={handlePayment} />
+            <BookedPreview handleBook={ids => bookMutate(ids)} />
+
+            {/* 결제창 */}
+            {/* 예매 응답 받고 확인되면 그때 띄워주기 */}
+            {data && (
+              <PaymentView
+                isPaymentView={isPaymentView}
+                setIsPaymentView={closePayment}
+                showTitle={seatsData.showTitle}
+                {...data}
+              />
+            )}
           </div>
         </>
       </RightContainer>

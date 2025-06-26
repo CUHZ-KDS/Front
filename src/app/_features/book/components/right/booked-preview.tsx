@@ -1,14 +1,20 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { useBookStore } from '../../store/bookStore';
 
-interface PaymentPreviewProps {
-  handlePayment: () => void;
+interface BookedPreviewProps {
+  handleBook: (ids: string[]) => void;
 }
 
-export default function PaymentPreview({ handlePayment }: PaymentPreviewProps) {
+// 예약 API 필요
+export default function BookedPreview({ handleBook }: BookedPreviewProps) {
   const selectSeats = useBookStore(state => state.selectSeats);
-
   const totalPrcie = selectSeats?.reduce((acc, cur) => acc + cur.seat.price, 0) || 0;
+
+  const handleBooking = () => {
+    const showSeatMappingIds = selectSeats.map(seat => seat.seat.id);
+    handleBook(showSeatMappingIds);
+  };
 
   return (
     <div className="flex h-full flex-col">
@@ -19,9 +25,9 @@ export default function PaymentPreview({ handlePayment }: PaymentPreviewProps) {
         disabled={!totalPrcie}
         className="ml-auto h-[49px] w-[162px] cursor-pointer text-xl font-semibold"
         variant="ff"
-        onClick={handlePayment}
+        onClick={handleBooking}
       >
-        결제하기
+        예매하기
       </Button>
     </div>
   );

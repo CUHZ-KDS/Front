@@ -40,11 +40,21 @@ export const useBookStore = create<State & Actions>(set => ({
       if (currentSeats.length >= SELECTE_SEATS_MAX_LENGTH) {
         return { ...state };
       }
-
       const updatedSeats = [...currentSeats, seat];
+      const sortedSeats = updatedSeats.slice().sort((a, b) => {
+        if (a.zoneName !== b.zoneName) {
+          return a.zoneName.localeCompare(b.zoneName); // 문자열 비교
+        }
+
+        if (a.seat.row !== b.seat.row) {
+          return a.seat.row - b.seat.row;
+        }
+
+        return a.seat.col - b.seat.col;
+      });
 
       return {
-        selectSeats: updatedSeats,
+        selectSeats: sortedSeats,
         availableSeats: SELECTE_SEATS_MAX_LENGTH - updatedSeats.length,
       };
     });
