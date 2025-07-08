@@ -12,11 +12,12 @@ export type ShowDetailType = {
   startDate: string;
   endDate: string;
   ticketDateTime: string;
+  serverTime: string;
   minAge: number;
   runningTimeMinute: number;
   intermissionTime: number;
   grade: Grade[];
-  imgSource: string;
+  showImgUrl: string;
 };
 
 export type ShowDetailApiType = {

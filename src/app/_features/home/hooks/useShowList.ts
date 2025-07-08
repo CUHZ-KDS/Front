@@ -1,19 +1,20 @@
 'use client';
-import { ShowApiType } from '@/types/showType';
+import { ShowApiType, ShowType } from '@/types/showType';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { API_URL, axiosInstance } from '@/lib/api';
+import { axiosErrorResponse } from '@/lib/axiosErrorResponse';
 
 const endpoint = API_URL.shows;
 
-async function getShowList(): Promise<ShowApiType> {
+async function getShowList(): Promise<ShowType[]> {
   try {
     const response = await axiosInstance.get<ShowApiType>(`/${endpoint}`);
 
-    const data: ShowApiType = response.data;
+    const data: ShowType[] = response.data.data.shows;
+
     return data;
-  } catch (e) {
-    // 상세한 에러 핸들링 필요
-    throw e;
+  } catch (error) {
+    throw axiosErrorResponse(error);
   }
 }
 

@@ -5,7 +5,7 @@ export type ShowType = {
   category: string;
   startDate: string;
   endDate: string;
-  imgSource: string;
+  showImgUrl: string;
   ticketStartDateTime: number;
   minAge: number;
   runningTimeMinute: number;
@@ -15,5 +15,5 @@ export type ShowType = {
 export type ShowApiType = {
   code: string;
   message: string;
-  data: ShowType[];
+  data: { shows: ShowType[] };
 };

@@ -9,7 +9,7 @@ type ShowType = {
   title: string;
   scheduleDateTime: string;
   place: string;
-  img_sorce: string;
+  showImgUrl: string;
 };
 type ReservationsType = {
   id: number; // 임시 아이디
