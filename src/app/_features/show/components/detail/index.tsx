@@ -16,12 +16,12 @@ export default function ShowDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: show } = useShowDetail(Number(id));
 
-  const { title, ticketDateTime, startDate, endDate, imgSource, schedules } = show;
+  const { title, ticketDateTime, startDate, serverTime, endDate, showImgUrl, schedules } = show;
 
   return (
     <ThreeContainer title={title}>
       <LeftContainer>
-        <Poster image={imgSource || ''} />
+        <Poster image={showImgUrl || ''} />
         <Gradient />
       </LeftContainer>
       <CenterContainer>
@@ -32,6 +32,7 @@ export default function ShowDetail() {
           ticketDateTime={ticketDateTime}
           id={id}
           startDate={startDate}
+          serverTime={serverTime}
           endDate={endDate}
           schedules={schedules}
         />

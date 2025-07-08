@@ -1,4 +1,4 @@
-import { SEAT_GRADE_COLORS } from '@/app/_features/book/tailwind';
+import { getSeatGradeColor } from '@/app/_features/book/tailwind';
 import { Badge } from '../ui/badge';
 import { SeatGrade } from '@/app/_features/book/types';
 import { cn } from '@/lib/utils';
@@ -11,7 +11,7 @@ interface SeatItemProps {
   price: number;
 }
 export default function SeatItem({ col, name, row, price, zoneName }: SeatItemProps) {
-  const badgeColor = SEAT_GRADE_COLORS[name];
+  const badgeColor = getSeatGradeColor(name);
   return (
     <div className="flex w-full items-center gap-2">
       <div className="flex w-full items-center justify-between">

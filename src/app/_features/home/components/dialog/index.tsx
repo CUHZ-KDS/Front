@@ -21,7 +21,7 @@ export default function ShowDetailDialog({ selectedItem, onClose }: ShowDetailDi
 
         <Card
           className="relative h-[650px] border-none bg-cover bg-center"
-          style={{ backgroundImage: `url(${selectedItem?.imgSource})` }}
+          style={{ backgroundImage: `url(${selectedItem?.showImgUrl})` }}
         >
           <CardContent className="relative z-20 h-full">
             <div className="absolute bottom-0 left-0 w-full p-6">

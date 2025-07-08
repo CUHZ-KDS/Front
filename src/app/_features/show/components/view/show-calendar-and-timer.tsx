@@ -10,13 +10,14 @@ export default function ShowCalendarAndTimer({
   endDate,
   startDate,
   ticketDateTime,
+  serverTime,
   schedules,
 }: ShowCalendarAndTimerProps) {
   const router = useRouter();
   const [done, setDone] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  const time = ticketDateTime ? getRemainingSeconds(ticketDateTime) : 0;
+  const time = ticketDateTime ? getRemainingSeconds(ticketDateTime, serverTime) : 0;
 
   const handleClick = () => {
     if (selectedDate) {

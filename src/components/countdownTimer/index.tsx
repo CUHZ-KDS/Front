@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import React, { useState, useEffect, memo } from 'react';
 
 interface CountdownTimerProps {
@@ -7,12 +8,15 @@ interface CountdownTimerProps {
   size?: number;
   /** 원의 두께 (px) */
   strokeWidth?: number;
+  isTitle?: boolean;
   /** 시간이 다 되었을 때 호출될 함수 */
   onComplete?: () => void;
+  className?: string;
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = memo(
   ({
+    className,
     initialSeconds,
     size = 40, // 기본 크기 40px
     strokeWidth = 4, // 기본 두께 4px
@@ -55,8 +59,8 @@ const CountdownTimer: React.FC<CountdownTimerProps> = memo(
 
     return (
       <div className="flex items-center justify-end gap-4 rounded-lg p-2 text-white">
-        <span className="text-xl font-bold tracking-wider select-none">
-          남은 시간 {timeFormatted}
+        <span className={cn('text-xl font-bold tracking-wider select-none', className)}>
+          {timeFormatted}
         </span>
 
         {/* 원형 프로그레스 바 */}
