@@ -1,6 +1,7 @@
+import '../globals.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import '../globals.css';
+import { Toaster } from 'sonner';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import TanstackProvider from '@/provider/TanstackProvider';
@@ -34,6 +35,7 @@ export default function RootLayout({
             <main className="flex flex-1">{children}</main>
             <Footer />
           </div>
+          <Toaster richColors={true} />
         </TanstackProvider>
       </body>
     </html>

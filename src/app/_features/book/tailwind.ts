@@ -12,3 +12,13 @@ export const SEAT_STATUS_CLASSES: Record<SeatStatus, string> = {
   [SeatStatus.AVAILABLE]: 'cursor-pointer',
   [SeatStatus.BOOKED]: 'cursor-default bg-white',
 };
+
+export const getSeatGradeColor = (grade: SeatGrade | string): string => {
+  if (grade in SEAT_GRADE_COLORS) {
+    return SEAT_GRADE_COLORS[grade as SeatGrade];
+  }
+
+  const DEFAULT_GRADE_COLOR = 'bg-[#C861DC]';
+
+  return DEFAULT_GRADE_COLOR;
+};

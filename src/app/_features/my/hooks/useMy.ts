@@ -1,24 +1,23 @@
 'use client';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { MyShowApiType } from '@/types/myShowType';
+import { MyShowApiType, MyShowType } from '@/types/myShowType';
 import { API_URL, axiosInstance } from '@/lib/api';
+import { axiosErrorResponse } from '@/lib/axiosErrorResponse';
 
 const endpoint = API_URL.my_reservations;
 
-async function getMyShowList(): Promise<MyShowApiType> {
-  // 서버에서 실행돼서 임시 해결
+async function getMyShowList(): Promise<MyShowType> {
   if (typeof window === 'undefined') {
-    return { data: {} } as MyShowApiType;
+    return { reservations: {} } as MyShowType;
   }
 
   try {
     const response = await axiosInstance.get<MyShowApiType>(`/${endpoint}`);
 
-    const data = response.data;
+    const data: MyShowType = response.data.data;
     return data;
-  } catch (e) {
-    // 상세한 에러 핸들링 필요
-    throw e;
+  } catch (error) {
+    throw axiosErrorResponse(error);
   }
 }
 
@@ -29,6 +28,5 @@ export function useMyShowList() {
   return useSuspenseQuery({
     queryKey: ['myShowList'],
     queryFn: getMyShowList,
-    // select: data => {},
   });
 }

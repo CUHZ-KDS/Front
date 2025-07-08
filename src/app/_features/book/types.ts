@@ -46,13 +46,29 @@ export interface GroupSortType {
   seats: SeatsType[][];
 }
 
+export interface ReservationType {
+  orderToken: string;
+  totalAmount: number;
+  reservedSeatIds: number[];
+}
+
 export interface ReservationsApiType {
   code: string;
   message: string;
   data: ReservationType;
 }
-export interface ReservationType {
-  orderToken: string;
-  totalAmount: number;
-  reservedSeatIds: number[];
+
+export interface PaymentViewProps extends ReservationType {
+  open: boolean;
+  onOpenChange: () => void;
+  showTitle: string;
+}
+
+export interface PaymentResponseData {
+  paymentKey: string;
+  orderId: string;
+  amount: {
+    value: number;
+    currency: string;
+  };
 }
