@@ -13,9 +13,9 @@ export default function Show() {
   return (
     <div className="w-full">
       <ShowCarousel
-        showList={showList?.data}
+        showList={showList}
         onItemClick={handleItemClick}
-        renderItem={item => <Poster className="h-[400px]" image={item.imgSource} />}
+        renderItem={item => <Poster className="h-[400px]" image={item.showImgUrl} />}
       />
       {selectedItem && <ShowDetailDialog onClose={handleDialogClose} selectedItem={selectedItem} />}
     </div>

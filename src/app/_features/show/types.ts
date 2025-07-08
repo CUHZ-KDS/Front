@@ -11,6 +11,7 @@ export interface ShowDescriptionProps {
 
 export interface ShowCalendarAndTimerProps {
   ticketDateTime: string;
+  serverTime: string;
   startDate: string;
   endDate: string;
   id: string;
